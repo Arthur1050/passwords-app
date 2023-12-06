@@ -1,14 +1,22 @@
 import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
+import * as Clippboard from "expo-clipboard";
 
-export default function ModalPassword({password}) {
+
+export default function ModalPassword({password, modalClose}) {
+    
+    const copyPassword = async () => {
+        await Clippboard.setStringAsync(password)
+        alert("Senha copiada para area de transferencia.")
+    }
+
     return <View style={styles.container}>
         <View style={styles.area}>
             <Text>Senha gerada</Text>
-            <Pressable>
-                <Text>{password}</Text>
+            <Pressable onPress={copyPassword} >
+                <Text style={styles.passwordText}>{password}</Text>
             </Pressable>
             <View style={{flexDirection: 'row', gap: 8}}>
-                <TouchableOpacity style={[styles.button, styles.buttonSecondary]}>
+                <TouchableOpacity onPress={modalClose} style={[styles.button, styles.buttonSecondary]}>
                     <Text style={[styles.textButton, , {color: '#392de9'}]}>
                         Cancelar
                     </Text>
@@ -35,7 +43,7 @@ const styles = StyleSheet.create({
         width: '85%',
         borderRadius: 16,
         alignItems: 'center',
-        gap: 16,
+        gap: 48,
         padding: 16
     },
     button: {
@@ -56,5 +64,11 @@ const styles = StyleSheet.create({
     textButton: {
         fontSize: 16,
         fontWeight: '600'
+    },
+    passwordText: {
+        fontSize: 24,
+        fontWeight: "600",
+        color: "#392de9",
+        textAlign: "center"
     }
 })

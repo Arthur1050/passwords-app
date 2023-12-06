@@ -9,7 +9,7 @@ const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 export default function App() {
   const [charCount, setCharCount] = useState(10)
   const [password, setPassword] = useState("")
-  const viewModal = useRef(false);
+  const [viewModal, setViewModal] = useState(false);
 
   const passwordGenerate = () => {
     var pass = '';
@@ -18,7 +18,7 @@ export default function App() {
     }
 
     setPassword(pass);
-    viewModal.current = true;
+    setViewModal(true)
   }
   return (
     <View style={styles.container}>
@@ -43,8 +43,8 @@ export default function App() {
           Gerar Senha
         </Text>
       </TouchableOpacity>
-      <Modal visible={viewModal.current} animationType='fade' transparent={true}>
-        <ModalPassword password={password}/>
+      <Modal visible={viewModal} animationType='fade' transparent={true}>
+        <ModalPassword password={password} modalClose={() => setViewModal(false)} />
       </Modal>
       <StatusBar style="auto" />
     </View>
